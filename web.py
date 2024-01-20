@@ -1,16 +1,9 @@
 
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 import numpy as np
-import plotly.express as px
 from streamlit_option_menu import option_menu
-import plotly.graph_objects as go
-import matplotlib.pyplot as plt
 import base64
-import webbrowser
-from bokeh.models.widgets import Div
-import streamlit.components.v1 as components
 
 
 
