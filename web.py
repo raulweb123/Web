@@ -12,7 +12,7 @@ st.set_page_config(
     layout="wide"
 )
 
-path_css="/style_sheet.css"
+path_css="style_sheet.css"
 def load_css(path_css):
     with open(path_css) as f: 
         return st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -41,7 +41,7 @@ selected = option_menu(
         "nav-link-selected": {"background-color": "#e8b20e"},
         })
 
-path_principal="/Productos/"
+path_principal="Productos/"
 
 if selected=="Cazadoras y abrigos":
     st.header("Cazadoras y abrigos")
@@ -60,7 +60,7 @@ if selected=="Cazadoras y abrigos":
             st.markdown(markdown, unsafe_allow_html=True)
             st.write("199,99€")
             def html_ref():
-                href=f"""<a href="/Productos/Cazadoras y Abrigos/Cazadora/Producto1.html"><button>INFO</button></a>"""
+                href=f"""<a href="Productos/Cazadoras y Abrigos/Cazadora/Producto1.html"><button>INFO</button></a>"""
                 return(href)
             st.link_button("Info","www.google.es")
             st.button("INFO", type="primary")
@@ -78,8 +78,8 @@ if selected=="Cazadoras y abrigos":
                                     </head>
                                     <title>CAZADORA PIEL CUELLO COMBINADO</title>
                                     <h1>CAZADORA PIEL CUELLO COMBINADO</h1>
-                                    <img src="/Productos/Cazadoras y Abrigos/Cazadora/Cazadora1.jpg" alt="Foto cazadora" width="200" height="300">
-                                    <img src="/Productos/Cazadoras y Abrigos/Cazadora/Cazadora2.jpg" alt="Foto Cazadora2" width="200" height="300">
+                                    <img src="Productos/Cazadoras y Abrigos/Cazadora/Cazadora1.jpg" alt="Foto cazadora" width="200" height="300">
+                                    <img src="Productos/Cazadoras y Abrigos/Cazadora/Cazadora2.jpg" alt="Foto Cazadora2" width="200" height="300">
                                     <p class="Precio">199,00 EUR</p>
                                     <h2>COMPOSICIÓN</h2>
                                     <p>Trabajamos con programas de seguimiento para garantizar el cumplimiento de nuestros estándares sociales, 
@@ -143,7 +143,7 @@ if selected=="Cazadoras y abrigos":
                 
     with center:
         st.write("***Abrigo de paño***")
-        with open("/Productos/Cazadoras y Abrigos/Abrigo/abrigo1.jpg", "rb") as f:
+        with open("Productos/Cazadoras y Abrigos/Abrigo/abrigo1.jpg", "rb") as f:
             data_uri = base64.b64encode(f.read()).decode("utf-8")
             markdown = f"""
             <div class="image">
