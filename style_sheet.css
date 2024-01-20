@@ -1,0 +1,64 @@
+
+#MainMenu {visibility:hidden;}
+footer {visibility:hidden;}
+header {visibility:hidden;}
+
+[data-testid="stAppViewContainer"]{
+    background-color: #72e9f2;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.Precio{
+    text-align: center;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    line-height: 1.5;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+strong {
+    font-weight: bold;
+}
+
+figure {
+    text-align: center;
+}
+
+figcaption {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+figure img {
+    margin: 5px;
+}
+body {
+    background-color: #2fe3f0; /* Fondo blanco */
+    color: #333; /* Color del texto */
+    font-family: Arial, sans-serif; /* Tipo de fuente para el texto */
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
