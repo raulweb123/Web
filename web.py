@@ -41,6 +41,15 @@ selected = option_menu(
         "nav-link-selected": {"background-color": "#e8b20e"},
         })
 
+if 'display_result' not in st.session_state:
+    st.session_state.display_result = False
+if 'reset' not in st.session_state:
+    st.session_state.reset = False
+
+def btn_b_callback():
+    st.session_state.display_result=False
+    st.session_state.reset=False
+
 path_principal="Productos/"
 
 if selected=="Cazadoras y abrigos":
@@ -62,9 +71,10 @@ if selected=="Cazadoras y abrigos":
             def html_ref():
                 href=f"""<a href="Productos/Cazadoras y Abrigos/Cazadora/Producto1.html"><button>INFO</button></a>"""
                 return(href)
-            st.link_button("Info","www.google.es")
-            st.button("INFO", type="primary")
-            if st.button("show info"):
+            mas_info_cazadora = st.button('Más información_')
+            if mas_info_cazadora:
+                st.session_state.display_result = True
+            if st.session_state.display_result: 
                 st.write(f"""
                                     <body>
                                         <div class="dot dot1"> </div>
@@ -77,10 +87,26 @@ if selected=="Cazadoras y abrigos":
                                         <link rel="stylesheet" href="/style_sheet.css">
                                     </head>
                                     <title>CAZADORA PIEL CUELLO COMBINADO</title>
-                                    <h1>CAZADORA PIEL CUELLO COMBINADO</h1>
-                                    <img src="Productos/Cazadoras y Abrigos/Cazadora/Cazadora1.jpg" alt="Foto cazadora" width="200" height="300">
-                                    <img src="Productos/Cazadoras y Abrigos/Cazadora/Cazadora2.jpg" alt="Foto Cazadora2" width="200" height="300">
-                                    <p class="Precio">199,00 EUR</p>
+                                    <h1>CAZADORA PIEL CUELLO COMBINADO</h1>""", unsafe_allow_html=True)
+
+                with open(path_principal + path_producto + "/Cazadora/Cazadora1.jpg", "rb") as f:
+                    data_uri = base64.b64encode(f.read()).decode("utf-8")
+                    markdown = f"""
+                    <div class="image">
+                    <img src="data:image/png;base64, {data_uri}" alt="Foto cazadora" width="200" height="300"/>
+                    </div>
+                    """
+                    st.markdown(markdown, unsafe_allow_html=True)
+                st.write("")
+                with open(path_principal + path_producto + "/Cazadora/Cazadora2.jpg", "rb") as f:
+                    data_uri = base64.b64encode(f.read()).decode("utf-8")
+                    markdown = f"""
+                    <div class="image">
+                    <img src="data:image/png;base64, {data_uri}" alt="Foto Cazadora2" width="200" height="300"/>
+                    </div>
+                    """
+                    st.markdown(markdown, unsafe_allow_html=True)
+                st.write("""<p class="Precio">199,00 EUR</p>
                                     <h2>COMPOSICIÓN</h2>
                                     <p>Trabajamos con programas de seguimiento para garantizar el cumplimiento de nuestros estándares sociales, 
                                         medioambientales y de seguridad y salud de nuestros productos. Para evaluar su cumplimiento hemos desarrollado un 
@@ -138,12 +164,11 @@ if selected=="Cazadoras y abrigos":
                                     </div>  
                                         </p>
                                 </html>""", unsafe_allow_html=True)
-            else:
-                st.write("")
+                menos_info_cazadora = st.button("Menos información_", on_click=btn_b_callback)
                 
     with center:
         st.write("***Abrigo de paño***")
-        with open("Productos/Cazadoras y Abrigos/Abrigo/abrigo1.jpg", "rb") as f:
+        with open(path_principal + path_producto + "Abrigo/abrigo1.jpg", "rb") as f:
             data_uri = base64.b64encode(f.read()).decode("utf-8")
             markdown = f"""
             <div class="image">
@@ -152,6 +177,72 @@ if selected=="Cazadoras y abrigos":
             """
             st.markdown(markdown, unsafe_allow_html=True)
             st.write("199,99€")
+            mas_info = st.button('Más información')
+            if mas_info:
+                st.session_state.display_result = True
+            if st.session_state.display_result: 
+                st.write(f"""
+                            <title>Abrigo de paño</title>
+                            <h1>Abrigo de paño con cuello solapas y manga larga</h1>
+                            <h2>Cierre botonadura frontal. Bolsillos delanteros.</h2>""", unsafe_allow_html=True)
+                
+                with open(path_principal + path_producto + "Abrigo/abrigo1.jpg", "rb") as f:
+                    data_uri = base64.b64encode(f.read()).decode("utf-8")
+                    markdown = f"""
+                    <div class="image">
+                    <img src="data:image/png;base64, {data_uri}" alt="Foto abrigo" width="200" height="300"/>
+                    </div>
+                    """
+                    st.markdown(markdown, unsafe_allow_html=True)
+                st.write(f"""
+                            <p class="Precio">29,99 EUR</p>
+                            <h2>COMPOSICIÓN</h2>
+                            <p>Trabajamos con programas de seguimiento para garantizar el cumplimiento de nuestros estándares sociales, 
+                                medioambientales y de seguridad y salud de nuestros productos. Para evaluar su cumplimiento hemos desarrollado un 
+                                programa de auditorías y planes de mejora continua.
+                                <ul>
+                                    <li>100% poliéster</li>
+                                <h2>CUIDADOS</h2>
+                                <p>Cuidar de tus prendas es cuidar del medioambiente. Para mantener limpias tus chaquetas y abrigos sólo tienes que ventilarlas
+                                    y pasarles un paño o un cepillo para la ropa. Si la limpieza en seco es necesaria intenta buscar tintorerías que utilicen 
+                                    tecnologías respetuosas con el medioambiente.
+                                <div>
+                                    <figure>
+                                        <figcaption>
+                                        <img src="https://static.zara.net/photos///contents/cm/product-cares-9-icon_0.svg?ts=1604343299129" alt="No lavar"> 
+                                        No lavar</figcaption>
+                                    </figure>
+                                </div>  
+                                <div>
+                                    <figure>
+                                        <figcaption>
+                                        <img src="https://static.zara.net/photos///contents/cm/product-cares-14-icon_0.svg?ts=1604343289322" width="32" height="32" alt="No lavar">
+                                        No usar lejia o blanqueador</figcaption>
+                                    </figure>
+                                </div>  
+                                <div>
+                                    <figure>
+                                        <figcaption>
+                                        <img src="https://static.zara.net/photos///contents/cm/product-cares-19-icon_0.svg?ts=1604343282915" width="32" height="32" alt="No lavar"> 
+                                        No planchar</figcaption>
+                                    </figure>
+                                </div>  
+                                <figure>
+                                    <figcaption>
+                                    <img src="https://static.zara.net/photos///contents/cm/product-cares-28-icon_0.svg?ts=1604343290530" width="32" height="32" alt="No lavar"> 
+                                    No limpieza en seco</figcaption>
+                                </figure>
+                            </div>  
+                            </div>  
+                            <figure>
+                                <figcaption>
+                                    <img src="https://static.zara.net/photos///contents/cm/product-cares-35-icon_0.svg?ts=1604343281266" width="32" height="32" alt="No lavar"> 
+                                No usar secadora</figcaption>
+                            </figure>
+                            </div>  
+                                </p>
+                        </html>""", unsafe_allow_html=True)
+                menos_info = st.button("Menos información", on_click=btn_b_callback)
     with right:
         st.write("Imagen3")
         with open("Ropa_ejemplo.jfif", "rb") as f:
@@ -242,6 +333,41 @@ if selected=="Calzado":
             markdown = f"""
             <div class="image">
             <img src="data:image/png;base64, {data_uri}" alt="image" />
+            </div>
+            """
+            st.markdown(markdown, unsafe_allow_html=True)
+    with center:
+        st.write("Imagen2")
+        with open("Ropa_ejemplo.jfif", "rb") as f:
+            data_uri = base64.b64encode(f.read()).decode("utf-8")
+            markdown = f"""
+            <div class="image">
+            <img src="data:image/png;base64, {data_uri}" alt="image" />
+            </div>
+            """
+            st.markdown(markdown, unsafe_allow_html=True)
+    with right:
+        st.write("Imagen3")
+        with open("Ropa_ejemplo.jfif", "rb") as f:
+            data_uri = base64.b64encode(f.read()).decode("utf-8")
+            markdown = f"""
+            <div class="image">
+            <img src="data:image/png;base64, {data_uri}" alt="image" />
+            </div>
+            """
+            st.markdown(markdown, unsafe_allow_html=True)
+if selected=="Camisetas":
+    path_producto="Camisetas/"
+    st.header("Camisetas")
+    left, center, right = st.columns((1,1,1))
+    with left:
+        st.write(f"""<p><strong>Camiseta "OFF White"<strong/></p>
+                 <p><em><strong>Exclusiva<strong/></em></p>""", unsafe_allow_html=True)
+        with open(path_principal + path_producto + "camiseta1.jpg", "rb") as f:
+            data_uri = base64.b64encode(f.read()).decode("utf-8")
+            markdown = f"""
+            <div class="image">
+            <img src="data:image/png;base64, {data_uri}" alt="image" width="250" height="400" />
             </div>
             """
             st.markdown(markdown, unsafe_allow_html=True)
