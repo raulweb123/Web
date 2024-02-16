@@ -19,6 +19,23 @@ def load_css(path_css):
     
 load_css(path_css)
 
+
+def btn_b_callback():
+    st.session_state.display_result=False
+    st.session_state.reset=False
+
+
+def display_image(path_principal, path_producto, path_final):
+    with open(path_principal + path_producto + path_final, "rb") as f:
+        data_uri = base64.b64encode(f.read()).decode("utf-8")
+        markdown = f"""
+        <div class="image">
+        <img src="data:image/png;base64, {data_uri}" alt="image" width="200" height="300"/>
+        </div>
+        """
+        return(st.markdown(markdown, unsafe_allow_html=True))
+
+
 selected = option_menu(
     menu_title=None,  # required
     options=["Cazadoras y abrigos","Camisetas", "Deportes","Pantalones", "Calzado"],  # Dropdown menu
@@ -41,14 +58,7 @@ selected = option_menu(
         "nav-link-selected": {"background-color": "#e8b20e"},
         })
 
-if 'display_result' not in st.session_state:
-    st.session_state.display_result = False
-if 'reset' not in st.session_state:
-    st.session_state.reset = False
 
-def btn_b_callback():
-    st.session_state.display_result=False
-    st.session_state.reset=False
 
 path_principal="Productos/"
 
@@ -59,54 +69,20 @@ if selected=="Cazadoras y abrigos":
     left, center, right = st.columns((1,1,1))
     with left:
         st.write("***Cazadora de cuero***")
-        with open(path_principal + path_producto + "/Cazadora/Cazadora1.jpg", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" width="200" height="300"/>
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
-            st.write("199,99€")
-            def html_ref():
-                href=f"""<a href="Productos/Cazadoras y Abrigos/Cazadora/Producto1.html"><button>INFO</button></a>"""
-                return(href)
-            mas_info_cazadora = st.button('Más información_')
-            if mas_info_cazadora:
-                st.session_state.display_result = True
-            if st.session_state.display_result: 
-                st.write(f"""
-                                    <body>
-                                        <div class="dot dot1"> </div>
-                                        <div class="dot dot2"> </div>
-                                        <div class="dot dot3"> </div>
-                                    </body>
-                                    <head>
-                                        <meta charset="UTF-8">
-                                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                        <link rel="stylesheet" href="/style_sheet.css">
-                                    </head>
-                                    <title>CAZADORA PIEL CUELLO COMBINADO</title>
-                                    <h1>CAZADORA PIEL CUELLO COMBINADO</h1>""", unsafe_allow_html=True)
-
-                with open(path_principal + path_producto + "/Cazadora/Cazadora1.jpg", "rb") as f:
-                    data_uri = base64.b64encode(f.read()).decode("utf-8")
-                    markdown = f"""
-                    <div class="image">
-                    <img src="data:image/png;base64, {data_uri}" alt="Foto cazadora" width="200" height="300"/>
-                    </div>
-                    """
-                    st.markdown(markdown, unsafe_allow_html=True)
-                st.write("")
-                with open(path_principal + path_producto + "/Cazadora/Cazadora2.jpg", "rb") as f:
-                    data_uri = base64.b64encode(f.read()).decode("utf-8")
-                    markdown = f"""
-                    <div class="image">
-                    <img src="data:image/png;base64, {data_uri}" alt="Foto Cazadora2" width="200" height="300"/>
-                    </div>
-                    """
-                    st.markdown(markdown, unsafe_allow_html=True)
-                st.write("""<p class="Precio">199,00 EUR</p>
+        display_image(path_principal, path_producto, "/Cazadora/Cazadora1.jpg")
+        st.write("199,99€")
+        def html_ref():
+            href=f"""<a href="Productos/Cazadoras y Abrigos/Cazadora/Producto1.html"><button>INFO</button></a>"""
+            return(href)
+        mas_info_cazadora = st.button('Más información', key=1)
+        if mas_info_cazadora:
+            st.write(f"""
+                                <title>CAZADORA PIEL CUELLO COMBINADO</title>
+                                <h1>CAZADORA PIEL CUELLO COMBINADO</h1>""", unsafe_allow_html=True)
+            display_image(path_principal, path_producto, "/Cazadora/Cazadora1.jpg")
+            st.write("")
+            display_image(path_principal, path_producto, "/Cazadora/Cazadora2.jpg")
+            st.write("""<p class="Precio">199,00 EUR</p>
                                     <h2>COMPOSICIÓN</h2>
                                     <p>Trabajamos con programas de seguimiento para garantizar el cumplimiento de nuestros estándares sociales, 
                                         medioambientales y de seguridad y salud de nuestros productos. Para evaluar su cumplimiento hemos desarrollado un 
@@ -164,36 +140,24 @@ if selected=="Cazadoras y abrigos":
                                     </div>  
                                         </p>
                                 </html>""", unsafe_allow_html=True)
-                menos_info_cazadora = st.button("Menos información_", on_click=btn_b_callback)
-                
-    with center:
-        st.write("***Abrigo de paño***")
-        with open(path_principal + path_producto + "Abrigo/abrigo1.jpg", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" width="200" height="300"/>
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+            menos_info_cazadora = st.button("Menos información",key=2, on_click=btn_b_callback)
+                    
+        with center:
+            st.write("***Abrigo de paño***")
+            display_image(path_principal, path_producto, "Abrigo/abrigo1.jpg")
             st.write("199,99€")
-            mas_info = st.button('Más información')
+            if 'display_result' not in st.session_state:
+                st.session_state.display_result = False
+            if 'reset' not in st.session_state:
+                st.session_state.reset = False
+
+            mas_info = st.button('Más información', key=3)
             if mas_info:
-                st.session_state.display_result = True
-            if st.session_state.display_result: 
                 st.write(f"""
                             <title>Abrigo de paño</title>
                             <h1>Abrigo de paño con cuello solapas y manga larga</h1>
                             <h2>Cierre botonadura frontal. Bolsillos delanteros.</h2>""", unsafe_allow_html=True)
-                
-                with open(path_principal + path_producto + "Abrigo/abrigo1.jpg", "rb") as f:
-                    data_uri = base64.b64encode(f.read()).decode("utf-8")
-                    markdown = f"""
-                    <div class="image">
-                    <img src="data:image/png;base64, {data_uri}" alt="Foto abrigo" width="200" height="300"/>
-                    </div>
-                    """
-                    st.markdown(markdown, unsafe_allow_html=True)
+                display_image(path_principal, path_producto, "Abrigo/abrigo1.jpg")
                 st.write(f"""
                             <p class="Precio">29,99 EUR</p>
                             <h2>COMPOSICIÓN</h2>
@@ -242,120 +206,62 @@ if selected=="Cazadoras y abrigos":
                             </div>  
                                 </p>
                         </html>""", unsafe_allow_html=True)
-                menos_info = st.button("Menos información", on_click=btn_b_callback)
+                menos_info = st.button("Menos información", key=4, on_click=btn_b_callback)
     with right:
         st.write("Imagen3")
-        with open("Ropa_ejemplo.jfif", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" width="200" height="300"/>
-            </div>
-            """
-            
-            st.markdown(markdown, unsafe_allow_html=True)
+        display_image("", "", "Ropa_ejemplo.jfif")
+
 if selected=="Deportes":
     st.header("Deportes")
     path_producto="Deportes/"
     left, center, right = st.columns((1,1,1))
     with left:
         st.write("***Camiseta de Baloncesto Ja Morant***")
-        with open(path_principal + path_producto + "Camiseta ja Morant/Camiseta1.jpg", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" width="250" height="250"/>
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
-            st.write("99,99€")
+        display_image(path_principal, path_producto, "Camiseta ja Morant/Camiseta1.jpg")
+        st.write("99,99€")
     with center:
         st.write("Imagen2")
-        with open("Ropa_ejemplo.jfif", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" />
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+        display_image("", "", "Ropa_ejemplo.jfif")
     with right:
         st.write("Imagen3")
-        with open("Ropa_ejemplo.jfif", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" />
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+        display_image("", "", "Ropa_ejemplo.jfif")
 
 if selected=="Pantalones":
     st.header("Pantalones")
     left, center, right = st.columns((1,1,1))
     with left:
         st.write("Imagen1")
-        with open("Ropa_ejemplo.jfif", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" />
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+        display_image("", "", "Ropa_ejemplo.jfif")
     with center:
         st.write("Imagen2")
-        with open("Ropa_ejemplo.jfif", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" />
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+        display_image("", "", "Ropa_ejemplo.jfif")
     with right:
         st.write("Imagen3")
-        with open("Ropa_ejemplo.jfif", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" />
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+        display_image("", "", "Ropa_ejemplo.jfif")
 if selected=="Calzado":
+    path_producto="Calzado/"
     st.header("Calzado")
     left, center, right = st.columns((1,1,1))
     with left:
-        st.write("Imagen1")
-        with open("Ropa_ejemplo.jfif", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" />
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+        st.write("Retro 4 Bred")
+        display_image(path_principal, path_producto, "retro 4 red bred/retro4.jpg")
+        st.write("500€") 
+        mas_info=st.button("Mas información", key=12)
+        if mas_info: 
+        
+            st.write(f"""
+                        <title>Camiseta "Jordan Retro4 Bred"<em><strong>3 en stock<strong/></em></title>""", unsafe_allow_html=True)
+            display_image(path_principal, path_producto, "retro 4 red bred/retro4.jpg")
+            st.write(f"""<h2>CUIDADOS</h2>
+                        <p>Lavar unicamente con productos especializados para calzado
+                        <div>""", unsafe_allow_html=True)
+            menos_info = st.button("Menos información", key=8, on_click=btn_b_callback)
     with center:
         st.write("Imagen2")
-        with open("Ropa_ejemplo.jfif", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" />
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+        display_image("", "", "Ropa_ejemplo.jfif")
     with right:
         st.write("Imagen3")
-        with open("Ropa_ejemplo.jfif", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" />
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+        display_image("", "", "Ropa_ejemplo.jfif")
 if selected=="Camisetas":
     path_producto="Camisetas/"
     st.header("Camisetas")
@@ -363,31 +269,26 @@ if selected=="Camisetas":
     with left:
         st.write(f"""<p><strong>Camiseta "OFF White"<strong/></p>
                  <p><em><strong>Exclusiva<strong/></em></p>""", unsafe_allow_html=True)
-        with open(path_principal + path_producto + "camiseta1.jpg", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" width="250" height="400" />
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+        display_image(path_principal, path_producto, "Camiseta1/camiseta1.jpg")
+        st.write("300€") 
+        mas_info=st.button("Mas información", key=6)
+        if mas_info: 
+        
+            st.write(f"""
+                        <title>Camiseta "OFF white"<em><strong>Exclusiva<strong/></em></title>""", unsafe_allow_html=True)
+            display_image(path_principal, path_producto, "Camiseta1/camiseta.jpg")
+            st.write(f"""<h2>COMPOSICIÓN</h2>
+                        <p> Camiseta Big Bookish Skate Negro y blanco, algodón, estampado del logo en la parte delantera, cuello redondo y manga corta.</p>
+                        <ul>
+                        <li>Algodón 100%</li>
+                        <h2>CUIDADOS</h2>
+                        <p>Lavar en lavadora
+                        <div>""", unsafe_allow_html=True)
+            menos_info = st.button("Menos información", key=4, on_click=btn_b_callback)
     with center:
         st.write("Imagen2")
-        with open("Ropa_ejemplo.jfif", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" />
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+        display_image("", "", "Ropa_ejemplo.jfif")
+          
     with right:
         st.write("Imagen3")
-        with open("Ropa_ejemplo.jfif", "rb") as f:
-            data_uri = base64.b64encode(f.read()).decode("utf-8")
-            markdown = f"""
-            <div class="image">
-            <img src="data:image/png;base64, {data_uri}" alt="image" />
-            </div>
-            """
-            st.markdown(markdown, unsafe_allow_html=True)
+        display_image("", "", "Ropa_ejemplo.jfif")
