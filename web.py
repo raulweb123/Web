@@ -217,7 +217,7 @@ if selected=="Deportes":
     left, center, right = st.columns((1,1,1))
     with left:
         st.write("***Camiseta de Baloncesto Ja Morant***")
-        display_image(path_principal, path_producto, "Camiseta ja Morant/Camiseta1.jpg")
+        display_image(path_principal, path_producto, "Camiseta Ja morant/Camiseta1.jpg")
         st.write("99,99€")
     with center:
         st.write("Imagen2")
